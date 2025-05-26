@@ -9,32 +9,35 @@
         canvas { width: 100%; height: 100%; background: #231F20; }
     </style>
     <script src="Build/WebXR-23-38.loader.js"></script>
+    <script src="webxr.js"></script> <!-- Add if needed -->
 </head>
 <body>
     <div id="unity-container">
         <canvas id="unity-canvas"></canvas>
     </div>
     <script>
-        const buildUrl = "Build";
-        const config = {
-            dataUrl: buildUrl + "/WebXR-23-38.data.unityweb",
-            frameworkUrl: buildUrl + "/WebXR-23-38.framework.js.unityweb",
-            codeUrl: buildUrl + "/WebXR-23-38.wasm.unityweb",
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "YourCompany",
-            productName: "YourProduct",
-            productVersion: "1.0",
-        };
+        window.addEventListener('load', () => {
+            const buildUrl = "Build";
+            const config = {
+                dataUrl: buildUrl + "/WebXR-23-38.data.unityweb",
+                frameworkUrl: buildUrl + "/WebXR-23-38.framework.js.unityweb",
+                codeUrl: buildUrl + "/WebXR-23-38.wasm.unityweb",
+                streamingAssetsUrl: "StreamingAssets",
+                companyName: "YourCompany",
+                productName: "YourProduct",
+                productVersion: "1.0",
+            };
 
-        const canvas = document.querySelector("#unity-canvas");
+            const canvas = document.querySelector("#unity-canvas");
 
-        createUnityInstance(canvas, config, (progress) => {
-            document.getElementById("unity-container").innerText = `Loading... ${Math.round(progress * 100)}%`;
-        }).then((unityInstance) => {
-            console.log("Unity WebXR loaded!");
-        }).catch((message) => {
-            console.error(message);
-            alert("Failed to load Unity WebXR build: " + message);
+            createUnityInstance(canvas, config, (progress) => {
+                document.getElementById("unity-container").innerText = `Loading... ${Math.round(progress * 100)}%`;
+            }).then((unityInstance) => {
+                console.log("Unity WebXR loaded!");
+            }).catch((message) => {
+                console.error(message);
+                alert("Failed to load Unity WebXR build: " + message);
+            });
         });
     </script>
 </body>
