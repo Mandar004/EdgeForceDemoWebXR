@@ -3,28 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>My Unity WebXR Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body { margin: 0; padding: 0; background: #231F20; }
-        #unity-container { width: 100%; height: 100vh; }
-        canvas { width: 100%; height: 100%; }
+        #unity-container { width: 100%; height: 100vh; overflow: hidden; }
+        canvas { width: 100%; height: 100%; background: #231F20; }
     </style>
-
     <script src="Build/WebXR-23-38.loader.js"></script>
 </head>
 <body>
     <div id="unity-container">
         <canvas id="unity-canvas"></canvas>
     </div>
-
     <script>
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/WebXR-23-38.loader.js";
         const config = {
-            dataUrl: buildUrl + "/WebXR-23-38.data",
-            frameworkUrl: buildUrl + "/WebXR-23-38.framework.js",
-            codeUrl: buildUrl + "/WebXR-23-38.wasm",
+            dataUrl: buildUrl + "/WebXR-23-38.data.unityweb",
+            frameworkUrl: buildUrl + "/WebXR-23-38.framework.js.unityweb",
+            codeUrl: buildUrl + "/WebXR-23-38.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "YourCompany",
             productName: "YourProduct",
@@ -34,11 +29,12 @@
         const canvas = document.querySelector("#unity-canvas");
 
         createUnityInstance(canvas, config, (progress) => {
-            console.log(`Loading: ${Math.round(progress * 100)}%`);
+            document.getElementById("unity-container").innerText = `Loading... ${Math.round(progress * 100)}%`;
         }).then((unityInstance) => {
-            console.log("Unity loaded!");
+            console.log("Unity WebXR loaded!");
         }).catch((message) => {
-            alert(message);
+            console.error(message);
+            alert("Failed to load Unity WebXR build: " + message);
         });
     </script>
 </body>
